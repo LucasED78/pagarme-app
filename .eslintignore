@@ -5,3 +5,7 @@ node_modules
 coverage
 
 .eslintrc.js
+
+index.js
+
+jest.config.js

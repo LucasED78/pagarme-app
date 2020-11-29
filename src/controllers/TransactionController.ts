@@ -74,6 +74,14 @@ class TransactionController implements ITransactionController {
       }
     }
   }
+
+  refund(ctx: ParameterizedContext<DefaultState, DefaultContext>): Promise<void> {
+    const { transactionId } = ctx.query;
+
+    if (transactionId) {
+      
+    }
+  }
 }
 
 export default TransactionController;
