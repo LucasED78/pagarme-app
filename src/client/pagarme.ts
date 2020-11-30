@@ -5,7 +5,7 @@ class PagarmeClient {
 
   static get client(): Promise<any> {
     if (!this.instance) {
-      return client.connect({ api_key: 'ak_test_4G6KgDssmWCco5WR2X0N5grJl6rm0t' })
+      return client.connect({ api_key: process.env.API_KEY })
         .then((client: any) => {
           this.instance = client
 

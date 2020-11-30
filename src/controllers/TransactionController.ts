@@ -1,11 +1,12 @@
 import { ITransactionController } from "../types/controller";
-import { ETransactionStatus, Transaction, TransactionResponse } from "../types/transaction";
+import { ETransactionStatus, RefundRequest, Transaction, TransactionResponse } from "../types/transaction";
 import { ITransactionService } from "../types/services";
 import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
 import PagarmeClient from "../client/pagarme";
 import { Injectable } from "../decorators/injectable";
 import { Inject } from "../decorators/inject";
 import '../services/TransactionService';
+import { NullOr } from "src/types/object";
 
 @Injectable("TransactionController")
 class TransactionController implements ITransactionController {
@@ -69,6 +70,8 @@ class TransactionController implements ITransactionController {
         data: response
       }
     } catch(error) {      
+      console.log(error);
+      
       ctx.body = {
         success: false,
         error
@@ -76,12 +79,33 @@ class TransactionController implements ITransactionController {
     }
   }
 
-  refund(ctx: ParameterizedContext<DefaultState, DefaultContext>): Promise<void> {
-    const { transactionId } = ctx.query;
+  refund = async (ctx: ParameterizedContext<DefaultState, DefaultContext>): Promise<void> => {
+    try {
+      const { transactionId } = ctx.params;
+      const bankRefund = ctx.body as NullOr<RefundRequest>;
 
-    
+      if (transactionId) {
+        const client = await PagarmeClient.client;
 
-    return Promise.resolve()
+        if (client) {
+          const response = await client.transactions.refund({ id: transactionId }) as TransactionResponse;
+
+          if (response) {
+            ctx.body = {
+              success: true,
+              data: response
+            }
+          } else {
+            throw new Error("sorry, we can't proccess your refund")
+          }
+        }
+      }
+    } catch(error) {
+      ctx.body = {
+        success: false,
+        error
+      }
+    }
   }
 }
 

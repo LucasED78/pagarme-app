@@ -15,8 +15,9 @@ class TransactionsRoutes extends Router {
   }
 
   get allRoutes(): Middleware<any, RouterParamContext> {
-    this.post('/', this.transactionsController.create)
+    this.post('/', this.transactionsController.create);
     this.get('/', this.transactionsController.all);
+    this.post('/refund/:transactionId', this.transactionsController.refund)
 
     return this.routes();
   }

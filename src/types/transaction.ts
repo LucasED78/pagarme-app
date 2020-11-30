@@ -179,3 +179,16 @@ export interface ITransactionsFilter {
 	status?: NullOr<ETransactionStatus>;
 	paymentMethod?: NullOr<EPaymentMethod>;
 }
+
+export interface RefundRequest {
+	bank_account_id?: NullOr<string>;
+  bank_code: string;
+  agency: string;
+  agencia?: NullOr<string>;
+  conta: string;
+  document_number: string;
+  legal_name: string;
+  async?: NullOr<boolean>;
+  type: string;
+  metadata?: NullOr<any>;
+}
