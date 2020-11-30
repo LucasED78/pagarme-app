@@ -1,15 +1,16 @@
 import { ITransactionController } from "../types/controller";
 import { ETransactionStatus, Transaction, TransactionResponse } from "../types/transaction";
-import ITransactionService from "../types/services";
+import { ITransactionService } from "../types/services";
 import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
 import PagarmeClient from "../client/pagarme";
+import { Injectable } from "../decorators/injectable";
+import { Inject } from "../decorators/inject";
+import '../services/TransactionService';
 
+@Injectable("TransactionController")
 class TransactionController implements ITransactionController {
-  transactionsService: ITransactionService;
-
-  constructor(transactionsService: ITransactionService) {
-    this.transactionsService = transactionsService;
-  }
+  @Inject("TransactionService")
+  transactionsService!: ITransactionService;
 
   create = async (ctx: ParameterizedContext<DefaultContext, DefaultState>): Promise<void> => {
     try { 
@@ -78,9 +79,9 @@ class TransactionController implements ITransactionController {
   refund(ctx: ParameterizedContext<DefaultState, DefaultContext>): Promise<void> {
     const { transactionId } = ctx.query;
 
-    if (transactionId) {
-      
-    }
+    
+
+    return Promise.resolve()
   }
 }
 

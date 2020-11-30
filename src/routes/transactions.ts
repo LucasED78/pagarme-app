@@ -1,14 +1,17 @@
 import Router, { RouterParamContext } from "@koa/router";
 import { Middleware } from "koa";
+import "../controllers/TransactionController";
+import { Inject } from "../decorators/inject";
+import { Injectable } from "../decorators/injectable";
 import { ITransactionController } from "../types/controller";
 
+@Injectable("TransactionRoutes")
 class TransactionsRoutes extends Router {
-  transactionsController: ITransactionController;
+  @Inject("TransactionController")
+  private transactionsController!: ITransactionController;
 
-  constructor(transactionsController: ITransactionController) {
+  constructor() {
     super({ prefix: '/transaction' });
-
-    this.transactionsController = transactionsController;
   }
 
   get allRoutes(): Middleware<any, RouterParamContext> {

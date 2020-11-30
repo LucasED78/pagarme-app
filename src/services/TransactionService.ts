@@ -1,6 +1,8 @@
 import { ITransactionsFilter, TransactionResponse } from '../types/transaction';
-import ITransactionService from '../types/services';
+import { ITransactionService } from '../types/services';
+import { Injectable } from '../decorators/injectable';
 
+@Injectable("TransactionService")
 class TransactionService implements ITransactionService {
   filter = (filter: ITransactionsFilter, transactions: TransactionResponse[]): TransactionResponse[] => {
     const filteredTransactions = transactions.filter(transaction => {      

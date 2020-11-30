@@ -1,5 +1,5 @@
 import { ITransactionsFilter, TransactionResponse } from "./transaction";
 
-export default interface ITransactionService {
+export interface ITransactionService {
   filter(filter: ITransactionsFilter, transactions: TransactionResponse[]): TransactionResponse[]
 }
