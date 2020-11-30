@@ -21,6 +21,8 @@ class TransactionController implements ITransactionController {
 
       const response = await clientResponse.transactions.create(transaction);
 
+      ctx.status = 200
+
       ctx.body = {
         success: true,
         data: response as TransactionResponse
@@ -59,11 +61,15 @@ class TransactionController implements ITransactionController {
           transactions = this.transactionsService.filter({ status, paymentMethod }, response);
         }
 
+        ctx.status = 200
+
         ctx.body = {
           success: true,
           data: transactions,
         }
       }
+
+      ctx.status = 200
 
       ctx.body = {
         success: true,
@@ -91,6 +97,8 @@ class TransactionController implements ITransactionController {
           const response = await client.transactions.refund({ id: transactionId }) as TransactionResponse;
 
           if (response) {
+            ctx.status = 200;
+
             ctx.body = {
               success: true,
               data: response
